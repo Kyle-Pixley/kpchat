@@ -12,3 +12,5 @@ dist/
 
 # Ignore log files
 *.log
+
+%ProgramData%/Microsoft/Windows/UUS/State
