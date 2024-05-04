@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Room = require("../models/room");
+const Room = require("../models/rooms");
 const adminValidation = require("../middlewares/admin");
 
 
