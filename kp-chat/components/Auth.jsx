@@ -15,15 +15,17 @@ function Auth({ updateAsyncStorage }) {
     const [ login, setLogin ] = useState(true);
 
     const handleSubmit = e => {
-        // e.preventDefault();
 
         const url = login 
         ? "http://127.0.0.1:4000/auth/login" 
         : "http://127.0.0.1:4000/auth/signup";
+
+        console.log(url, ' this is the url')
         
         const body = login 
             ? { userName, password }
             : { userName, firstName, lastName, email, password }
+            console.log(body, ' this is the body')
 
         fetch(url, {
             method: "POST",
