@@ -20,7 +20,7 @@ function Auth({ updateAsyncStorage }) {
         const url = login 
         ? "http://127.0.0.1:4000/auth/login" 
         : "http://127.0.0.1:4000/auth/signup";
-
+        
         const body = login 
             ? { userName, password }
             : { userName, firstName, lastName, email, password }
@@ -34,7 +34,6 @@ function Auth({ updateAsyncStorage }) {
         })
         .then(res => res.json())
         .then(data => updateAsyncStorage(data.token))
-        //! don't know if this ^^ will work
         .catch(err => console.log(err))
     };
 
@@ -84,13 +83,13 @@ function Auth({ updateAsyncStorage }) {
         <Text style={styles.title}>KP CHAT</Text>
 
             <View>
-                <Text style={styles.inputLabel}>Email</Text>
+                <Text style={styles.inputLabel}>User Name</Text>
 
                 <TextInput 
                 style={styles.input}
                 value={userName}
                 onChangeText={text => setUserName(text)}
-                placeholder='Enter email here'/>
+                placeholder='Enter user name here'/>
 
             </View>
             <View>
@@ -104,7 +103,9 @@ function Auth({ updateAsyncStorage }) {
 
             </View>
 
-        <CustomButton buttonText={login ? 'Login' : 'Submit'} />
+        <CustomButton 
+        buttonText={login ? 'Login' : 'Submit'}
+        handleSubmit={handleSubmit} />
 
     </View>
   )
