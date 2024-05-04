@@ -3,7 +3,7 @@ import { Pressable, View, StyleSheet } from 'react-native';
 import Box from './Box';
 
 
-function CustomButton({ buttonText }) {
+function CustomButton({ buttonText, handleSubmit }) {
 
     const styles = StyleSheet.create({
         container: {
@@ -19,7 +19,7 @@ function CustomButton({ buttonText }) {
 
   return (
     <View style={styles.container}>
-        <Pressable>
+        <Pressable onPress={handleSubmit}>
             {(state) => <Box pressed={state.pressed} buttonText={buttonText}/>}
         </Pressable>
     </View>

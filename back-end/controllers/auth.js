@@ -65,4 +65,49 @@ router.post("/signup", async (req, res) => {
     }
 });
 
+router.put("/update/:id", sessionValidation, async (req, res) => {
+    try {
+        if (!req.user) throw Error("User is not logged in");
+        if (!req.user.isAdmin) throw Error("User does not have permission");
+
+        const { id: _id } = req.params
+        const updatedUser = req.body
+
+        const updateUser = await User.updateOne({ _id }, { $set:updatedUser })
+
+        if (updateUser.matchedCount === 0) throw Error("ID not found")
+
+        res.status(200).json({
+            message: `User Updated`,
+            updateUser
+        })
+    } catch(err) {
+        res.status(500).json({
+            message: err
+        })
+    }
+});
+
+router.delete("/delete/:id", sessionValidation, async (req, res) => {
+    try {
+        if (!req.user) throw Error("User is not logged in");
+        if (!req.user.isAdmin) throw Error("User does not have permission");
+
+        const { id: _id } = req.params
+        
+        const deleteOne = await User.findByIdAndDelete({ _id });
+
+        if (!deleteOne) throw Error("User not found");
+
+        res.status(200).json({
+            message: `Account Deleted`,
+            deleteOne
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: err
+        })
+    }
+});
+
 module.exports = router;
