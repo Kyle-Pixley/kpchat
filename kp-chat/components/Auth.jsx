@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import CustomButton from './buttonComponent/CustomButton';
 
 
-function Auth({ updateAsyncStorage }) {
+function Auth({ sessionToken, setSessionToken }) {
 
     const [ userName, setUserName ] = useState("");
     const [ firstName, setFirstName ] = useState("");
@@ -14,36 +14,79 @@ function Auth({ updateAsyncStorage }) {
 
     const [ login, setLogin ] = useState(true);
 
-    const handleSubmit = e => {
+    const updateAsyncStorage = async (newToken) => {
+        await AsyncStorage.setItem('token', newToken);
+        console.log('session token', sessionToken)
+        setSessionToken(newToken);
+    };
+
+    const handleSubmit = () => {
 
         const url = login 
-        ? "http://127.0.0.1:4000/auth/login" 
-        : "http://127.0.0.1:4000/auth/signup";
-
-        console.log(url, ' this is the url')
+        ? "http://10.0.0.79:8081/auth/login" 
+        : "http://10.0.0.79:8081/auth/signup";
         
         const body = login 
-            ? { userName, password }
-            : { userName, firstName, lastName, email, password }
-            console.log(body, ' this is the body')
+        ? { userName, password }
+        : { userName, firstName, lastName, email, password }
+
+        console.log("Sending request to:", url)
+        console.log("Request body:", body)
 
         fetch(url, {
             method: "POST",
             body: JSON.stringify(body),
             headers: new Headers({
-                "Content-Type" : "application/json"
+                "Content-Type" : "application/json",
             })
         })
-        .then(res => res.json())
-        .then(data => updateAsyncStorage(data.token))
-        .catch(err => console.log(err))
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP status ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log("Data received" , data);
+            if (data.token) {
+                updateAsyncStorage(data.token);
+            } else {
+                console.log("No token received", data);
+                throw new Error("No token in response")
+            }
+        })
+        .catch(err => console.error("Error handling response", err))
     };
+
+    const register = e = login ? null : (
+        <>
+            <Text style={styles.inputLabel}>E-mail</Text>
+            <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={text => setEmail(text)}
+                placeholder='Enter E-mail here'/>
+            
+            <Text style={styles.inputLabel}>First Name</Text>
+            <TextInput
+                style={styles.input}
+                value={firstName}
+                onChangeText={text => setFirstName(text)}
+                placeholder='Enter first name here'/>
+            
+            <Text style={styles.inputLabel}>Last Name</Text>
+            <TextInput
+                style={styles.input}
+                value={firstName}
+                onChangeText={text => setLastName(text)}
+                placeholder='Enter last name here'/>
+        </>
+    )
 
     const styles = StyleSheet.create({
         authContainer: {
             width: '100%',
             height: '100%',
-            // flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: 'rgb(1, 101, 147)'
@@ -76,6 +119,10 @@ function Auth({ updateAsyncStorage }) {
         },
         submitButtonText: {
             fontSize: 30
+        },
+        toggleLoginButton: {
+            borderWidth: 1,
+            borderColor: 'black',
         }
     })
 
@@ -85,6 +132,7 @@ function Auth({ updateAsyncStorage }) {
         <Text style={styles.title}>KP CHAT</Text>
 
             <View>
+                {register}
                 <Text style={styles.inputLabel}>User Name</Text>
 
                 <TextInput 
@@ -107,8 +155,12 @@ function Auth({ updateAsyncStorage }) {
 
         <CustomButton 
         buttonText={login ? 'Login' : 'Submit'}
-        handleSubmit={handleSubmit} />
+        onPress={handleSubmit} />
 
+        <CustomButton
+        buttonText={login ? 'Create Account' : 'Login Here'}
+        onPress={() => setLogin(!login)}
+        />
     </View>
   )
 }

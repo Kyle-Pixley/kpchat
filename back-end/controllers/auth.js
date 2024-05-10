@@ -7,16 +7,22 @@ const JWT_KEY = process.env.JWT_KEY;
 const sessionValidation = require("../middlewares/session");
 
 router.post('/login', async (req, res) => {
+    console.log('login route hit')
     try {
         const { userName, password } = req.body
 
         let foundUser = await User.findOne({ userName })
 
-        if (!foundUser) throw Error("User not found");
+        if (!foundUser) {
+            console.error(`Login attempt failed: User not found for userName: ${userName}`);
+            throw new Error("Authentication failed");
+        }
 
         const verifyPassword = await bcrypt.compare(password, foundUser.password)
-
-        if (!verifyPassword) throw Error("Incorrect Password")
+        if (!verifyPassword) {
+            console.error(`Login attempt failed: Incorrect password for userName ${userName}`);
+            throw new Error("Authentication failed");
+        }
 
         const token = jwt.sign(
             { _id: foundUser._id, isAdmin: foundUser.isAdmin }, 
@@ -26,12 +32,13 @@ router.post('/login', async (req, res) => {
 
         res.status(200).json({
             message: `Logged in`,
-            foundUser,
+            // foundUser,
             token
         })
     } catch (err) {
+        console.error(`Login error: ${err.message}`);
         res.status(500).json({
-            message: err.message
+            message: "Internal server error"
         });
     }
 });
