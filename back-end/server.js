@@ -4,8 +4,8 @@ const cors = require("cors");
 const { dbConnect } = require("./db");
 const app = express();
 
-const PORT = process.env.PORT || 4000;
-const HOST = process.env.HOST || "127.0.0.1";
+const PORT = process.env.PORT
+const HOST = process.env.HOST 
 
 const authController = require("./controllers/Auth");
 const messageController = require("./controllers/Message");
