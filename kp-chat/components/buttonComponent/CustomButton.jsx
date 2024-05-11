@@ -3,26 +3,23 @@ import { Pressable, View, StyleSheet } from 'react-native';
 import Box from './Box';
 
 
-function CustomButton({ buttonText }) {
+function CustomButton({ buttonText, onPress }) {
 
     const styles = StyleSheet.create({
         container: {
             height: 45,
-            width: '50%',
+            width: '55%',
             borderWidth: 1,
             borderColor: 'black',
             marginTop: 40,
             borderRadius: 4,
-            paddingRight: 8,
-            paddingLeft: 8,
-
         },
     })
 
 
   return (
     <View style={styles.container}>
-        <Pressable>
+        <Pressable onPress={onPress}>
             {(state) => <Box pressed={state.pressed} buttonText={buttonText}/>}
         </Pressable>
     </View>
