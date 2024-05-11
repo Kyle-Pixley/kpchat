@@ -20,15 +20,27 @@ export default function App() {
       if (decodedToken.exp > currentTime) {
         setSessionToken(token);
       } else {
-        // Token has expired
         await AsyncStorage.removeItem('token');
+        setSessionToken(null);
       }
     }
   };
 
   return (
     <View style={styles.container}>
-      {sessionToken ? <Dashboard sessionToken={sessionToken} /> : <Auth sessionToken={sessionToken} setSessionToken={setSessionToken}/>}
+      {sessionToken ? 
+        <Dashboard 
+          sessionToken={sessionToken} 
+          setSessionToken={setSessionToken}/> 
+          : 
+          <Dashboard 
+          sessionToken={sessionToken} 
+          setSessionToken={setSessionToken}/> 
+        // <Auth 
+        //   sessionToken={sessionToken} 
+        //   setSessionToken={setSessionToken}/>
+          }
+          {/* ! make sure to fix this */}
       <StatusBar style="auto" />
     </View>
   );

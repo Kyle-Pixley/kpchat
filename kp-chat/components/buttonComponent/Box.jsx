@@ -9,6 +9,7 @@ function Box(props) {
             height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
+            borderRadius: 4,
         },
         text: {
             fontSize: 30
