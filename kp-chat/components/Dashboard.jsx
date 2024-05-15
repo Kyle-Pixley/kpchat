@@ -29,8 +29,6 @@ function Dashboard({ setSessionToken }) {
       <Text>
         dashboard
       </Text>
-      <Button title="Logout"
-      onPress={() => setSessionToken(null)}/>
     </View>
   )
 }

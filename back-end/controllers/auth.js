@@ -117,4 +117,26 @@ router.delete("/delete/:id", sessionValidation, async (req, res) => {
     }
 });
 
+router.get("/getUsersRooms/:userId", sessionValidation, async (req, res) => {
+    console.log('** get all rooms the user belongs to')
+    try {
+        const { userId: _id } = req.params;
+
+    const allRooms = await User.findById(userId).populate('rooms');
+    
+    if (!user) {
+        return res.status(404).json({ message: "User not found"});
+    }
+
+    res.status(200).json(user.rooms);
+
+    } catch (err) {
+        res.status(500).json({
+            message: err
+        })
+    }
+});
+
+// todo need to create a route to add room to the user models room array 
+
 module.exports = router;

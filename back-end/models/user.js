@@ -1,4 +1,5 @@
 const { mongoose } = require("../db");
+const { ObjectId } = mongoose.Schema;
 
 const User = new mongoose.Schema(
     {
@@ -25,6 +26,11 @@ const User = new mongoose.Schema(
         },
         password: {
             type: String,
+            required: true
+        },
+        rooms: {
+            type: [ObjectId],
+            ref: 'rooms',
             required: true
         },
         isAdmin: {
