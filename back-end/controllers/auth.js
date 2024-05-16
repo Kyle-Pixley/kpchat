@@ -117,4 +117,58 @@ router.delete("/delete/:id", sessionValidation, async (req, res) => {
     }
 });
 
+
+router.get("/getUsersRooms/:userId", sessionValidation, async (req, res) => {
+    console.log('** get all rooms the user belongs to')
+    try {
+        const { userId } = req.params;
+        console.log('User ID: ', userId);
+
+        const user = await User.findById(userId).populate('rooms');
+
+        if (!user) {
+            return res.status(404).json({ message: `User is not found`});
+        }
+        console.log("User rooms: ", user.rooms)
+
+        res.status(200).json({
+            message: `All user's rooms retrieved`,
+            rooms: user.rooms
+        });
+
+    } catch (err) {
+        console.error("Error occurred ", err)
+        res.status(500).json({
+            message: `An error occurred while retrieving user's rooms`,
+            error: err.message
+        })
+    }
+});
+
+
+router.put("/addRoomToUser/:userId", sessionValidation, async (req, res) => {
+    try {
+        const  userId = req.params.userId;
+
+        const { roomId } = req.body;
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $addToSet: { rooms: roomId }},
+            { new: true, useFindAndModify: false }
+        );
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user);
+
+    } catch (err) {
+        res.status(500).json({
+            message: err
+        })
+    }
+});
+
 module.exports = router;

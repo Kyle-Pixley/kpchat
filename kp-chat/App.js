@@ -33,13 +33,16 @@ export default function App() {
           sessionToken={sessionToken} 
           setSessionToken={setSessionToken}/> 
           : 
-          <Dashboard 
+          
+          // <Dashboard 
+          // sessionToken={sessionToken} 
+          // setSessionToken={setSessionToken}/> 
+        <Auth 
           sessionToken={sessionToken} 
-          setSessionToken={setSessionToken}/> 
-        // <Auth 
-        //   sessionToken={sessionToken} 
-        //   setSessionToken={setSessionToken}/>
+          setSessionToken={setSessionToken}/>
           }
+
+
           {/* ! make sure to fix this */}
       <StatusBar style="auto" />
     </View>

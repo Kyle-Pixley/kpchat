@@ -11,7 +11,6 @@ function CustomButton({ buttonText, onPress }) {
             width: '55%',
             borderWidth: 1,
             borderColor: 'black',
-            marginTop: 40,
             borderRadius: 4,
         },
     })

@@ -7,9 +7,6 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
 
-    "jsEngine" : "hermes",
-    // added this ^^ 
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
