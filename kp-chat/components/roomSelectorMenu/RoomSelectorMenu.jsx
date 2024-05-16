@@ -1,8 +1,10 @@
 import React from 'react';
-import CustomButton from '../buttonComponent/CustomButton';
 import { StyleSheet, View, Text, Button } from 'react-native';
+import CustomButton from '../buttonComponent/CustomButton';
+import UsersRoomsList from './usersRoomsList/UsersRoomsList';
 
-function RoomSelectorMenu({ toggleRoomMenu, setToggleRoomMenu }) {
+
+function RoomSelectorMenu({ toggleRoomMenu, setToggleRoomMenu, setSessionToken }) {
 
     const styles = StyleSheet.create({
         roomSelectorMenu: {
@@ -57,7 +59,7 @@ function RoomSelectorMenu({ toggleRoomMenu, setToggleRoomMenu }) {
             onPress={() => setToggleRoomMenu(!toggleRoomMenu)}/>
             </View>
         <View style={styles.roomList}>
-
+            <UsersRoomsList />
         </View>
         <View style={styles.logoutButtonContainer}>
             <CustomButton style={styles.logoutButton} buttonText={'Logout'}

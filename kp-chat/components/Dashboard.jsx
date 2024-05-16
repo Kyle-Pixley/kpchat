@@ -24,7 +24,8 @@ function Dashboard({ setSessionToken }) {
       <RoomSelectorMenu 
       style={styles.roomSelectorMenu}
       toggleRoomMenu={toggleRoomMenu}
-      setToggleRoomMenu={setToggleRoomMenu} /> 
+      setToggleRoomMenu={setToggleRoomMenu}
+      setSessionToken={setSessionToken} /> 
       : null }
       <Text>
         dashboard

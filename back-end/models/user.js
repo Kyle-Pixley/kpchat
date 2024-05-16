@@ -30,7 +30,7 @@ const User = new mongoose.Schema(
         },
         rooms: {
             type: [ObjectId],
-            ref: 'rooms',
+            ref: 'room',
             required: true
         },
         isAdmin: {
