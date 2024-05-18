@@ -1,21 +1,21 @@
-import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View, Text, Button, Animated } from 'react-native';
 import CustomButton from '../buttonComponent/CustomButton';
 import UsersRoomsList from './usersRoomsList/UsersRoomsList';
 
 
-function RoomSelectorMenu({ toggleRoomMenu, setToggleRoomMenu, setSessionToken }) {
+function RoomSelectorMenu({ toggleRoomMenu, setToggleRoomMenu, setSessionToken, setRoomRef }) {
 
     const styles = StyleSheet.create({
         roomSelectorMenu: {
             height: '100%',
-            width: '80%',
+            width: '70%',
             backgroundColor: 'rgb(19, 105, 144)',
             position: 'absolute',
             top: 0,
             left: 0,
             zIndex: 99,
-            alignContent: 'center',
+            alignItems: 'center',
         },
         roomMenuTextButtonParent: {
             flexDirection: 'row',
@@ -41,17 +41,29 @@ function RoomSelectorMenu({ toggleRoomMenu, setToggleRoomMenu, setSessionToken }
             marginRight: 8,
             marginTop: 8,
             marginBottom: 8,
+            width: '95%',
         },
         logoutButtonContainer: {
-            width: '100%',
-            alignContent: 'center',
-            padding: 0,
-            alignItems: 'center',
+            width: '80%',
         },
-    })
+    });
+
+    const slideIn = useRef(new Animated.ValueXY({ x: -300, y: 0 })).current;
+
+    const startSlideIn = () => {
+            Animated.timing(slideIn, {
+                toValue: { x: 0, y: 0 },
+                duration: 300,
+                useNativeDriver: true,
+            }).start();
+    };
+
+    useEffect(() => {
+        startSlideIn()
+    }, [])
 
   return (
-    <View style={styles.roomSelectorMenu}>
+    <Animated.View style={[ styles.roomSelectorMenu, { transform: slideIn.getTranslateTransform()}]}>
         <View style={styles.roomMenuTextButtonParent}>
             <Text style={styles.roomSelectorMenuTitle}>Room Selector Menu</Text>
             <Button title='S' 
@@ -59,13 +71,13 @@ function RoomSelectorMenu({ toggleRoomMenu, setToggleRoomMenu, setSessionToken }
             onPress={() => setToggleRoomMenu(!toggleRoomMenu)}/>
             </View>
         <View style={styles.roomList}>
-            <UsersRoomsList />
+            <UsersRoomsList setRoomRef={setRoomRef} />
         </View>
         <View style={styles.logoutButtonContainer}>
             <CustomButton style={styles.logoutButton} buttonText={'Logout'}
                 onPress={() => setSessionToken(null)}/>
         </View>
-    </View>
+    </Animated.View>
   )
 }
 

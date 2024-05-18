@@ -8,7 +8,7 @@ function CustomButton({ buttonText, onPress }) {
     const styles = StyleSheet.create({
         container: {
             height: 45,
-            width: '55%',
+            width: '100%',
             borderWidth: 1,
             borderColor: 'black',
             borderRadius: 4,

@@ -18,6 +18,7 @@ router.get("/:room_id", async (req, res) => {
     }
 });
 
+// Create a message assigned to a specific room
 router.post("/:room_id", async (req, res) => {
     try {
         const { body } = req.body;

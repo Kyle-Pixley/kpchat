@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
 import CustomButton from '../../buttonComponent/CustomButton';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-function UsersRoomsList() {
+function UsersRoomsList({ setRoomRef }) {
+
   const [usersRooms, setUsersRooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -63,14 +64,26 @@ function UsersRoomsList() {
     fetchData();
   }, []);
 
+  const styles = StyleSheet.create({
+    usersRoomsListContainer: {
+      alignItems: 'center',
+      paddingTop: 8,
+    },
+    roomButtonContainers: {
+      width: '90%',
+    }
+  })
+
   return (
-    <View>
+    <View style={styles.usersRoomsListContainer}>
       {loading ? (
         <Text>Loading...</Text>
       ) : (
         usersRooms.length > 0 ? (
           usersRooms.map((room, i) => (
-            <CustomButton key={i} buttonText={room.name} onClick={() => console.log('make this active room')} />
+            <View style={styles.roomButtonContainers}>
+              <CustomButton key={i} buttonText={room.name} onPress={() => setRoomRef(room)} />
+            </View>
           ))
         ) : (
           <Text>No rooms found</Text>
