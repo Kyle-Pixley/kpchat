@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { jwtDecode, jwtPayload } from 'jwt-decode';
 import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
@@ -46,13 +45,9 @@ export default function App() {
           sessionToken={sessionToken} 
           setSessionToken={setSessionToken}/> 
           : 
-          
-          <Dashboard 
+        <Auth 
           sessionToken={sessionToken} 
-          setSessionToken={setSessionToken}/> 
-        // <Auth 
-          // sessionToken={sessionToken} 
-          // setSessionToken={setSessionToken}/>
+          setSessionToken={setSessionToken}/>
           }
 
 

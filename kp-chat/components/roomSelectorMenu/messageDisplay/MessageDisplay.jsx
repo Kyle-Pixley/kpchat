@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import Message from './Message/Message';
 
 function MessageDisplay({ roomRef, sessionToken }) {
@@ -31,10 +31,8 @@ function MessageDisplay({ roomRef, sessionToken }) {
             fetch(`http://10.0.0.79:8081/message/${roomId}`, options)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data, ` This is all the messages for ${roomRef.name}.`)
                     if (Array.isArray(data.allMessages)) {
                         setRoomMessages(data.allMessages)
-                        console.log(roomMessages,' this is room messages ---------------')
                     } else {
                         setRoomMessages([]);
                     }
@@ -45,9 +43,9 @@ function MessageDisplay({ roomRef, sessionToken }) {
 
   return (
     <View style={styles.messageDisplayContainer}>
-        <Text>{roomRef.description}</Text>
         {roomMessages.map((message, i) => {
             return <Message 
+                        sessionToken={sessionToken}
                         key={i}
                         message={message}
                         />
