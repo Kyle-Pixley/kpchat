@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar, View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode, jwtPayload } from 'jwt-decode';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
+
 
 export default function App() {
   const [sessionToken, setSessionToken] = useState(null);
@@ -39,25 +41,31 @@ export default function App() {
   };
 
   return (
+  <KeyboardAwareScrollView style={{flex: 1, height: '100%'}} contentContainerStyle={styles.scrollViewContent}>
+
     <View style={styles.container}>
       {sessionToken ? 
         <Dashboard 
-          sessionToken={sessionToken} 
-          setSessionToken={setSessionToken}/> 
-          : 
+        sessionToken={sessionToken} 
+        setSessionToken={setSessionToken}/> 
+        : 
         <Auth 
-          sessionToken={sessionToken} 
-          setSessionToken={setSessionToken}/>
-          }
+        sessionToken={sessionToken} 
+        setSessionToken={setSessionToken}/>
+      }
 
 
           {/* ! make sure to fix this */}
       <StatusBar style="auto" />
     </View>
+  </KeyboardAwareScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

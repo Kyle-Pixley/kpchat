@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import RoomSelectorMenu from './roomSelectorMenu/RoomSelectorMenu';
 import MessageDisplay from './roomSelectorMenu/messageDisplay/MessageDisplay';
+import MessageInput from './roomSelectorMenu/messageInput/MessageInput';
 
 function Dashboard({ sessionToken, setSessionToken }) {
 
@@ -44,9 +45,7 @@ function Dashboard({ sessionToken, setSessionToken }) {
       roomRef={roomRef} 
       sessionToken={sessionToken} />
 
-      <Text>
-        dashboard
-      </Text>
+      <MessageInput />
 
     </View>
   )
