@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Message from './Message/Message';
 
 function MessageDisplay({ roomRef, sessionToken }) {
@@ -7,9 +7,15 @@ function MessageDisplay({ roomRef, sessionToken }) {
     const [ roomMessages, setRoomMessages ] = useState([]);
 
     const styles = StyleSheet.create({
-        messageDisplayContainer: {
+        scrollViewContainer: {
             height: '80%',
             width: '95%',
+            borderWidth: 1,
+            borderColor: 'black',
+        },
+        messageDisplayContainer: {
+            height: '100%',
+            width: '100%',
             borderWidth: 1,
             borderColor: 'black',
         }
@@ -42,16 +48,17 @@ function MessageDisplay({ roomRef, sessionToken }) {
     }, [roomRef])
 
   return (
-    <View style={styles.messageDisplayContainer}>
-        {roomMessages.map((message, i) => {
-            return <Message 
-                        sessionToken={sessionToken}
-                        key={i}
-                        message={message}
-                        />
-
-        })}
-    </View>
+    <ScrollView style={styles.scrollViewContainer}>
+        <View style={styles.messageDisplayContainer}>
+            {roomMessages.map((message, i) => {
+                return <Message 
+                sessionToken={sessionToken}
+                key={i}
+                message={message}
+                />
+            })}
+        </View>
+    </ScrollView>
   )
 }
 

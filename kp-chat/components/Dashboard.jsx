@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import RoomSelectorMenu from './roomSelectorMenu/RoomSelectorMenu';
 import MessageDisplay from './roomSelectorMenu/messageDisplay/MessageDisplay';
@@ -8,6 +8,8 @@ function Dashboard({ sessionToken, setSessionToken }) {
 
   const [ roomRef, setRoomRef ] = useState('');
   const [ toggleRoomMenu, setToggleRoomMenu ] = useState(false);
+  const [ roomMessages, setRoomMessages ] = useState([]);
+  const roomMessageRef = useRef(null);
 
   const styles = StyleSheet.create({
     dashboardContainer: {
@@ -24,6 +26,16 @@ function Dashboard({ sessionToken, setSessionToken }) {
       alignItems: 'flex-start',
     }
   });
+
+  const handleMessageCreated = (newMessage) => {
+    setRoomMessages([...roomMessages, newMessage])
+  };
+
+  useEffect(() => {
+    if(roomMessageRef.current) {
+      roomMessageRef.current.scrollTo(0, roomMessageRef.current.scrollHeight)
+    }
+  }, [ roomMessages ])
 
   return (
     <View style={styles.dashboardContainer}>
@@ -43,9 +55,15 @@ function Dashboard({ sessionToken, setSessionToken }) {
 
       <MessageDisplay 
       roomRef={roomRef} 
-      sessionToken={sessionToken} />
+      sessionToken={sessionToken} 
+      roomMessages={roomMessages}
+      setRoomMessages={setRoomMessages} 
+      roomMessageRef={roomMessageRef} />
 
-      <MessageInput />
+      <MessageInput 
+      roomRef={roomRef} 
+      sessionToken={sessionToken} 
+      messageCreated={handleMessageCreated} />
 
     </View>
   )
