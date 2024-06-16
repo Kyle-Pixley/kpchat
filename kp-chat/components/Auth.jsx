@@ -24,8 +24,8 @@ function Auth({ sessionToken, setSessionToken }) {
     const handleSubmit = () => {
 
         const url = login 
-        ? "http://10.0.0.79:8081/auth/login" 
-        : "http://10.0.0.79:8081/auth/signup";
+        ? "http://10.0.0.23:8081/auth/login" 
+        : "http://10.0.0.23:8081/auth/signup";
         
         const body = login 
         ? { userName, password }
