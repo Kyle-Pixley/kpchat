@@ -79,7 +79,16 @@ function Auth({ updateLocalStorage }) {
 
   return (
     <div id='login'>
-        <h1>KP-CHAT</h1>
+        <div id='title-parent'>
+            <h1 className='title' id='title-1'>K</h1>
+            <h1 className='title' id='title-2'>P</h1>
+            <h1 className='title' id='title-hyphen'>-</h1>
+            <h1 className='title' id='title-3'>C</h1>
+            <h1 className='title' id='title-4'>H</h1>
+            <h1 className='title' id='title-5'>A</h1>
+            <h1 className='title' id='title-6'>T</h1>
+        </div>
+
         <button id='signup-button' onClick={toggle}>{ login ? "To Signup?" : "To Login" }</button>
         <form action='' className='form-parent'>
             {register()}
