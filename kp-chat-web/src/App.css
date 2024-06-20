@@ -4,3 +4,11 @@
   height: 100vh;
   overflow: hidden;
 }
+#logout {
+  position: absolute;
+  right: .5vh;
+  top: .5vh;
+  width: fit-content;
+  height: fit-content;
+  padding: .5vw 1vw;
+}

@@ -35,8 +35,8 @@ function App() {
 
   return (
     <div id='app-container'>
-      {handleView()}
       { sessionToken && <button id='logout' onClick={logout}>Logout</button>}
+      {handleView()}
     </div>
   )
 }

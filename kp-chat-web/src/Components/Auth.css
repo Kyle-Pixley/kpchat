@@ -35,6 +35,9 @@ button {
 button:active {
     box-shadow: inset 2px 2px 4px #0b2828, 2px 2px 4px #d5fcf0;
 }
+button:hover {
+    cursor: pointer;
+}
 #title-parent {
     display: flex;
 }
