@@ -1,0 +1,10 @@
+#message-group {
+    width: 100%;
+}
+.message-sent, .message-received {
+    border: 1px solid black;
+    width: fit-content;
+}
+.message-sent {
+    
+}

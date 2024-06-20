@@ -9,7 +9,7 @@ function Message({ message, sessionToken, getAllMessages }) {
   const [ newEditMessage, setNewEditMessage ] = useState("");
 
   const handleMouseEnter = (e, messageUser) => {
-    const decodedToken = decode(sessionToken);
+    const decodedToken = decode.jwtDecode(sessionToken);
     if (decodedToken.isAdmin || (messageUser && decodedToken._id === messageUser._id)) {
       setShowOptions(true);
     }
@@ -55,7 +55,17 @@ function Message({ message, sessionToken, getAllMessages }) {
     fetch(`http://10.0.0.23:8081/message/${message._id}`, options)
       .then(res => res.json())
       .then(() => getAllMessages());
+  }
 
+  const handleSenderAlign = () => {
+    const decodedToken2 = decode.jwtDecode(sessionToken);
+    console.log(message.user._id, 'message')
+    console.log(decodedToken2._id, 'decodedToken2')
+    if(message.user._id === decodedToken2._id){
+      return 'message-sent'
+    } else {
+      return 'message-received'
+    }
   }
 
   
@@ -72,10 +82,10 @@ function Message({ message, sessionToken, getAllMessages }) {
             <button onClick={cancelEditMessage}>Cancel</button>
             <button onClick={submitEditMessage}>Save</button>
           </>
-          : <p id='message-body'>{message.body}</p>}
+          : <p id='message-body' className={handleSenderAlign()}>{message.body}</p>}
 
-      <p id='signature'>-{message.user ? message.user.userName : 'Deleted User'}</p>
-
+      <p id='signature' className={handleSenderAlign()}>-{message.user ? message.user.userName : 'Deleted User'}</p>
+{console.log(handleSenderAlign())}
       { showOptions && !inEdit 
         ? <div id='message-menu'>
             <button onClick={enableEditMessage}>Edit</button>

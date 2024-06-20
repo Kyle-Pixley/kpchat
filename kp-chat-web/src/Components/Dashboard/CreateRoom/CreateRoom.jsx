@@ -8,7 +8,7 @@ function CreateRoom({ sessionToken }) {
 
   const submitForm = e => {
     e.preventDefault();
-    const url = "http://10.0.0.23:8081/room/"
+    const url = "http://10.0.0.23:8081/rooms/"
 
     const body = { name, description };
 

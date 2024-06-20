@@ -69,22 +69,22 @@ function Rooms({ sessionToken, isOpen, setIsOpen }) {
 
   return (
     <div id='rooms-container'>
-      <div id='room-list'>
+      <div id='rooms-list-parent'>
         <button id='create-room-button' onClick={e => setIsOpen(!isOpen)}>Create New Room</button>
-        { allRooms && allRooms.length !== 0 
-          ? allRooms.map((room, i) =>
-          <div id='room-list'>
-            <p className='room-name' key={i} onClick={() => handleRoomClick(room)}>
-              {room.name}
-            </p>
-          </div>
-          )
-          : <h1>Loading</h1>
-        }
+        <div id='room-list'>
+          { allRooms && allRooms.length !== 0 
+            ? allRooms.map((room, i) =>
+              <p className='room-name' key={i} onClick={() => handleRoomClick(room)}>
+                {room.name}
+              </p>
+            )
+            : <h1>Loading</h1>
+          }
+        </div>
       </div>
       {selectedRoom && (
         <div id='selected-room-parent'>
-          <h2 id='selected-room'>{selectedRoom.name}</h2>
+          <h2 id='selected-room-title'>{selectedRoom.name}</h2>
           <div id='room-messages' ref={roomMessageRef}>
             { roomMessages.map((message, i) => {
               return <Message
