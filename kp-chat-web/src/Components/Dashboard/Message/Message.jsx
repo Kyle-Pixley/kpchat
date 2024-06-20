@@ -59,8 +59,6 @@ function Message({ message, sessionToken, getAllMessages }) {
 
   const handleSenderAlign = () => {
     const decodedToken2 = decode.jwtDecode(sessionToken);
-    console.log(message.user._id, 'message')
-    console.log(decodedToken2._id, 'decodedToken2')
     if(message.user._id === decodedToken2._id){
       return 'message-sent'
     } else {
@@ -82,10 +80,17 @@ function Message({ message, sessionToken, getAllMessages }) {
             <button onClick={cancelEditMessage}>Cancel</button>
             <button onClick={submitEditMessage}>Save</button>
           </>
-          : <p id='message-body' className={handleSenderAlign()}>{message.body}</p>}
+          :
+          <div className='message-parents'>
+            <p id='message-body' className= 
+              {handleSenderAlign()}>{message.body}
+            </p>
+          </div>
+          }
 
-      <p id='signature' className={handleSenderAlign()}>-{message.user ? message.user.userName : 'Deleted User'}</p>
-{console.log(handleSenderAlign())}
+      <div className='message-parents'>
+        <p id='signature' className={handleSenderAlign()}>-{message.user ? message.user.userName : 'Deleted User'}</p>
+      </div>
       { showOptions && !inEdit 
         ? <div id='message-menu'>
             <button onClick={enableEditMessage}>Edit</button>

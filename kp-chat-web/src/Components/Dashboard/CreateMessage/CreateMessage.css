@@ -1,0 +1,15 @@
+#new-message-form {
+    border: 1px solid red;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#message-input {
+    width: 60%;
+    font-size: 180%;
+}
+#submit-message {
+    width: 30%;
+    margin-right: 2vw;
+}
