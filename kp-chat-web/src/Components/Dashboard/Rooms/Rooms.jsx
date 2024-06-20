@@ -3,7 +3,7 @@ import './Rooms.css';
 import CreateMessage from '../CreateMessage/CreateMessage.jsx';
 import Message from '../Message/Message.jsx';
 
-function Rooms({ sessionToken, isOpen, setIsOpen }) {
+function Rooms({ sessionToken, isOpen, setIsOpen, socket }) {
 
   const [ allRooms, setAllRooms ] = useState([]);
   const [ selectedRoom, setSelectedRoom ] = useState(null);
@@ -11,6 +11,7 @@ function Rooms({ sessionToken, isOpen, setIsOpen }) {
   const roomMessageRef = useRef(null);
 
   function getAllMessages() {
+    
     if(!selectedRoom) return;
 
     const options = {
@@ -23,7 +24,6 @@ function Rooms({ sessionToken, isOpen, setIsOpen }) {
     fetch(`http://10.0.0.23:8081/message/${selectedRoom._id}`, options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         if (Array.isArray(data.allMessages)) {
           setRoomMessages(data.allMessages)
         } else {
@@ -99,6 +99,7 @@ function Rooms({ sessionToken, isOpen, setIsOpen }) {
             sessionToken={sessionToken}
             selectedRoom={selectedRoom}
             messageCreated={handleMessageCreated}
+            socket={socket}
           />
         </div>
       )}

@@ -3,7 +3,7 @@
     display: flex;
 }
 #rooms-list-parent {
-    width: 23vw;
+    width: 20vw;
     display: flex;
     flex-direction: column;
 }
@@ -17,6 +17,7 @@
     margin: 1vh .5vh;
     border-radius: 23px;
     box-shadow: inset 2px 2px 4px #d2f8f9, 2px 2px 4px #042f22;
+    width: 80%;
 }
 .room-name:active {
     box-shadow: inset 2px 2px 4px #0b2828, 2px 2px 4px #d5fcf0;
@@ -40,4 +41,7 @@
     font-size: 22px;
     overflow-y: scroll;
     height: 80vh;
+    background-color: #b4f9e4;
+    box-shadow: inset 2px 2px 4px white, 2px 2px 4px #0c926a;
+    margin-left: 2vh;
 }
