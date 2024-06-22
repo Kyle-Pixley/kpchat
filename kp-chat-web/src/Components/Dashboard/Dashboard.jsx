@@ -4,27 +4,36 @@ import CreateRoom from './CreateRoom/CreateRoom.jsx';
 import './Dashboard.css';
 
 function Dashboard({ sessionToken, socket }) {
-
-  const [ isOpen, setIsOpen ] = useState(false);
-  //! might need to put this in room.jsx -------
+  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [ selectedRoom, setSelectedRoom ] = useState(null);
 
   useEffect(() => {
     if (socket) {
-      socket.onmessage = (event) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          try {
-            const newMessage = JSON.parse(reader.result);
-            setMessages((prevMessages) => [...prevMessages, newMessage]);
-          } catch (error) {
-            console.error('Failed to parse WebSocket message:', reader.result, error);
-          }
-        };
-        reader.onerror = (error) => {
-          console.error('Failed to read Blob:', error);
-        };
-        reader.readAsText(event.data);
+      const handleMessage = (event) => {
+        if (event.data instanceof Blob) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const newMessage = JSON.parse(reader.result);
+              setMessages((prevMessages) => [...prevMessages, newMessage]);
+            } catch (error) {
+              console.error('Failed to parse WebSocket message:', reader.result, error);
+            }
+          };
+          reader.onerror = (error) => {
+            console.error('Failed to read Blob:', error);
+          };
+          reader.readAsText(event.data);
+        } else {
+          console.error('Unexpected non-Blob data:', event.data);
+        }
+      };
+
+      socket.addEventListener('message', handleMessage);
+
+      return () => {
+        socket.removeEventListener('message', handleMessage);
       };
     }
   }, [socket]);
@@ -32,31 +41,46 @@ function Dashboard({ sessionToken, socket }) {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch(`/api/messages?token=${sessionToken}`);
-        const data = await response.json();
-        setMessages(data);
-      } catch (error) {
-        console.error('Failed to fetch messages:', error);
-      }
+        if(selectedRoom != null) {
+
+          const options = {
+            method: 'GET',
+            headers: new Headers({
+              authorization: sessionToken,
+            }),
+          };
+
+          const response = await fetch(`http://10.0.0.23:8081/message/${selectedRoom._id}` , options );
+          console.log(selectedRoom, '============================')
+          console.log(response, ' this is the response') 
+          if (response.ok) {
+            const data = await response.json();
+            setMessages(data);
+          } else {
+            console.error('Failed to fetch messages:', response.statusText);
+          }
+        } else { null }
+
+        } catch (error) {
+          console.error('Failed to fetch messages:', error);
+        }
     };
 
     fetchMessages();
   }, [sessionToken]);
 
-  //! ===========================================
-
   const displayCreateForm = () => {
-    if(isOpen) {
+    if (isOpen) {
       return (
         <>
-          <button onClick={e => setIsOpen(false)}>Close</button>
+          <button onClick={() => setIsOpen(false)}>Close</button>
           <CreateRoom sessionToken={sessionToken} />
         </>
-      )
+      );
     } else {
-      return <Rooms sessionToken={sessionToken} isOpen={isOpen} setIsOpen={setIsOpen} socket={socket} />
+      return <Rooms sessionToken={sessionToken} isOpen={isOpen} setIsOpen={setIsOpen} socket={socket} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} />;
     }
-  }
+  };
 
   return (
     <div id='dashboard'>
@@ -64,7 +88,7 @@ function Dashboard({ sessionToken, socket }) {
         {displayCreateForm()}
       </div>
     </div>
-  )
+  );
 }
 
 export default Dashboard;
