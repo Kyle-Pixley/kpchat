@@ -10,19 +10,21 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
     e.preventDefault();
 
     if(messageBody.trim() === '') return;
+    console.log(messageBody, ' message body');
 
     const user = decode.jwtDecode(sessionToken);
 
-    console.log(decode.jwtDecode(sessionToken));
+    console.log(decode.jwtDecode(sessionToken), '===============================');
 
     const message = {
-      body: messageBody,
-      room: selectedRoom._id,
       user: user._id,
+      room: selectedRoom._id,
+      body: messageBody,
     };
 
     if(socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(message));
+      socket.send(JSON.stringify(messageBody));
+      //!changed this from message to messageBody
     } else {
       console.error('WebSocket is not open');
     }
@@ -49,6 +51,7 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
       });
       setMessageBody("");
   }
+
   return (
     <div style={{width: '90%'}}>
       <form action='' id='new-message-form'>

@@ -31,6 +31,7 @@ function App() {
             try {
               const message = JSON.parse(reader.result);
               console.log('Received message:', message);
+
             } catch (error) {
               console.error('Failed to parse WebSocket message:', reader.result, error);
             }

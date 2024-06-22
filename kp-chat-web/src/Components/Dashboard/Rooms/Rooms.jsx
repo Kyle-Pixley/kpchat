@@ -3,10 +3,9 @@ import './Rooms.css';
 import CreateMessage from '../CreateMessage/CreateMessage.jsx';
 import Message from '../Message/Message.jsx';
 
-function Rooms({ sessionToken, isOpen, setIsOpen, socket }) {
+function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelectedRoom }) {
 
-  const [ allRooms, setAllRooms ] = useState([]);
-  const [ selectedRoom, setSelectedRoom ] = useState(null);
+  const [ allRooms, setAllRooms ] = useState([]);;
   const [ roomMessages, setRoomMessages ] = useState([]);
   const roomMessageRef = useRef(null);
 

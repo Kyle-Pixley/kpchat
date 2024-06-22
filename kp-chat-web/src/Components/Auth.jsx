@@ -11,9 +11,6 @@ function Auth({ updateLocalStorage }) {
 
     const [ login, setLogin ] = useState(true);
 
-    useEffect(() => {
-        console.log(email, userName)
-    }, [email,userName])
     const register = () => login ? null : (
         <>
             <input
