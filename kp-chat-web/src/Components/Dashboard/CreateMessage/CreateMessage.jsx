@@ -13,9 +13,8 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
     console.log(messageBody, ' message body');
 
     const user = decode.jwtDecode(sessionToken);
-
-    console.log(decode.jwtDecode(sessionToken), '===============================');
-
+    
+//! --------------------------------------
     const message = {
       user: user._id,
       room: selectedRoom._id,
@@ -23,12 +22,11 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
     };
 
     if(socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(messageBody));
-      //!changed this from message to messageBody
+      socket.send(JSON.stringify(message));
     } else {
       console.error('WebSocket is not open');
     }
-
+//! the issue lies here I think but I am too tired to think 
 
     const options = {
       method: "POST",

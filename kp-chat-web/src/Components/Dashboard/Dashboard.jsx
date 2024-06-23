@@ -4,9 +4,11 @@ import CreateRoom from './CreateRoom/CreateRoom.jsx';
 import './Dashboard.css';
 
 function Dashboard({ sessionToken, socket }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [ isOpen, setIsOpen ] = useState(false);
+  const [ messages, setMessages ] = useState([]);
   const [ selectedRoom, setSelectedRoom ] = useState(null);
+  const [ roomMessages, setRoomMessages ] = useState([]);
+
 
   useEffect(() => {
     if (socket) {
@@ -16,7 +18,7 @@ function Dashboard({ sessionToken, socket }) {
           reader.onload = () => {
             try {
               const newMessage = JSON.parse(reader.result);
-              setMessages((prevMessages) => [...prevMessages, newMessage]);
+              setRoomMessages((prevMessages) => [...prevMessages, newMessage]);
             } catch (error) {
               console.error('Failed to parse WebSocket message:', reader.result, error);
             }
@@ -38,36 +40,34 @@ function Dashboard({ sessionToken, socket }) {
     }
   }, [socket]);
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        if(selectedRoom != null) {
+  // useEffect(() => {
+  //   const fetchMessages = async () => {
+  //     try {
+  //       if(selectedRoom != null) {
 
-          const options = {
-            method: 'GET',
-            headers: new Headers({
-              authorization: sessionToken,
-            }),
-          };
+  //         const options = {
+  //           method: 'GET',
+  //           headers: new Headers({
+  //             authorization: sessionToken,
+  //           }),
+  //         };
 
-          const response = await fetch(`http://10.0.0.23:8081/message/${selectedRoom._id}` , options );
-          console.log(selectedRoom, '============================')
-          console.log(response, ' this is the response') 
-          if (response.ok) {
-            const data = await response.json();
-            setMessages(data);
-          } else {
-            console.error('Failed to fetch messages:', response.statusText);
-          }
-        } else { null }
+  //         const response = await fetch(`http://10.0.0.23:8081/message/${selectedRoom._id}` , options );
+  //         if (response.ok) {
+  //           const data = await response.json();
+  //           setMessages(data);
+  //         } else {
+  //           console.error('Failed to fetch messages:', response.statusText);
+  //         }
+  //       } else { null }
 
-        } catch (error) {
-          console.error('Failed to fetch messages:', error);
-        }
-    };
+  //       } catch (error) {
+  //         console.error('Failed to fetch messages:', error);
+  //       }
+  //   };
 
-    fetchMessages();
-  }, [sessionToken]);
+  //   fetchMessages();
+  // }, [sessionToken]);
 
   const displayCreateForm = () => {
     if (isOpen) {
@@ -78,7 +78,7 @@ function Dashboard({ sessionToken, socket }) {
         </>
       );
     } else {
-      return <Rooms sessionToken={sessionToken} isOpen={isOpen} setIsOpen={setIsOpen} socket={socket} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} />;
+      return <Rooms sessionToken={sessionToken} isOpen={isOpen} setIsOpen={setIsOpen} socket={socket} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} messages={messages} setMessages={setMessages} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />;
     }
   };
 

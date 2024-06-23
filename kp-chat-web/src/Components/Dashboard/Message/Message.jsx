@@ -45,7 +45,7 @@ function Message({ message, sessionToken, getAllMessages }) {
     cancelEditMessage();
   }
 
-  const handleDeleteMessage = e => {
+  const handleDeleteMessage = () => {
     const options = { 
       method: "DELETE",
       headers: new Headers({
@@ -57,14 +57,14 @@ function Message({ message, sessionToken, getAllMessages }) {
       .then(() => getAllMessages());
   }
 
-  const handleSenderAlign = () => {
-    const decodedToken2 = decode.jwtDecode(sessionToken);
-    if(message.user._id === decodedToken2._id){
-      return 'message-sent'
-    } else {
-      return 'message-received'
-    }
-  }
+  // const handleSenderAlign = () => {
+  //   const decodedToken2 = decode.jwtDecode(sessionToken);
+  //   if(message.user._id === decodedToken2._id){
+  //     return 'message-sent'
+  //   } else {
+  //     return 'message-received'
+  //   }
+  // }
 
   
   return (
@@ -82,14 +82,18 @@ function Message({ message, sessionToken, getAllMessages }) {
           </>
           :
           <div className='message-parents'>
-            <p id='message-body' className= 
-              {handleSenderAlign()}>{message.body}
+            <p id='message-body' 
+            // className={handleSenderAlign()}
+            >{message.body}
             </p>
           </div>
           }
-
+{console.log(message, ' this is it here buddy')}
+{/* message comes back as 2 different Objects when the page loads it is what I want and when the message is sent via the socket it is different because I tried to do the socket at a later time than the roomMessages so they are saving to the dataBase as one thing and sending over the socket as another ****see createMessage.jsx**** */}
       <div className='message-parents'>
-        <p id='signature' className={handleSenderAlign()}>-{message.user ? message.user.userName : 'Deleted User'}</p>
+        <p id='signature' 
+        // className={handleSenderAlign()}
+        >-{message.user ? message.user.userName : 'Deleted User'}</p>
       </div>
       { showOptions && !inEdit 
         ? <div id='message-menu'>

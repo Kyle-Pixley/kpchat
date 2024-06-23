@@ -3,10 +3,9 @@ import './Rooms.css';
 import CreateMessage from '../CreateMessage/CreateMessage.jsx';
 import Message from '../Message/Message.jsx';
 
-function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelectedRoom }) {
+function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelectedRoom, roomMessages, setRoomMessages }) {
 
   const [ allRooms, setAllRooms ] = useState([]);;
-  const [ roomMessages, setRoomMessages ] = useState([]);
   const roomMessageRef = useRef(null);
 
   function getAllMessages() {
@@ -23,6 +22,7 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
     fetch(`http://10.0.0.23:8081/message/${selectedRoom._id}`, options)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data, ' this is the data being set to roomMessages');
         if (Array.isArray(data.allMessages)) {
           setRoomMessages(data.allMessages)
         } else {
@@ -56,9 +56,9 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
     }
   }, [roomMessages])
 
-  const handleMessageCreated = (newMessage) => {
-    setRoomMessages([...roomMessages, newMessage])
-  }
+  // const handleMessageCreated = (newMessage) => {
+  //   setRoomMessages([...roomMessages, newMessage])
+  // }
 
   const handleRoomClick = (room) => {
     setSelectedRoom(room)
@@ -79,6 +79,7 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
             )
             : <h1>Loading</h1>
           }
+{console.log(roomMessages,' this is roomMessages')}
         </div>
       </div>
       {selectedRoom && (
@@ -97,7 +98,7 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
           <CreateMessage 
             sessionToken={sessionToken}
             selectedRoom={selectedRoom}
-            messageCreated={handleMessageCreated}
+            // messageCreated={handleMessageCreated}
             socket={socket}
           />
         </div>

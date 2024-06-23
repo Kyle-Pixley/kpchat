@@ -61,10 +61,6 @@ function App() {
     }
   }, [ sessionToken ]);
 
-  const handleWebSocketMessage = (message) => {
-    console.log('WebSocket message:', message);
-  }
-
   //gives you a token to your browsers local storage
   const updateLocalStorage = newToken => {
     localStorage.setItem("token", newToken)
