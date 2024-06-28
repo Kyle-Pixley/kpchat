@@ -8,27 +8,27 @@ function Message({ message, sessionToken, getAllMessages }) {
   const [ inEdit, setInEdit ] = useState(false);
   const [ newEditMessage, setNewEditMessage ] = useState("");
 
-  const handleMouseEnter = (e, messageUser) => {
+  const handleMouseEnter = (messageUser) => {
     const decodedToken = decode.jwtDecode(sessionToken);
     if (decodedToken.isAdmin || (messageUser && decodedToken._id === messageUser._id)) {
       setShowOptions(true);
     }
   }
 
-  const handleMouseLeave = e => {
+  const handleMouseLeave = () => {
     setShowOptions(false);
   }
 
-  const enableEditMessage = e => {
+  const enableEditMessage = () => {
     setInEdit(true);
   }
 
-  const cancelEditMessage = e => {
+  const cancelEditMessage = () => {
     setInEdit(false);
     setNewEditMessage("");
   }
 
-  const submitEditMessage = e => {
+  const submitEditMessage = () => {
     const options = {
       method: "PUT",
       body: JSON.stringify({ body: newEditMessage }),
@@ -45,7 +45,7 @@ function Message({ message, sessionToken, getAllMessages }) {
     cancelEditMessage();
   }
 
-  const handleDeleteMessage = e => {
+  const handleDeleteMessage = () => {
     const options = { 
       method: "DELETE",
       headers: new Headers({
@@ -59,14 +59,28 @@ function Message({ message, sessionToken, getAllMessages }) {
 
   const handleSenderAlign = () => {
     const decodedToken2 = decode.jwtDecode(sessionToken);
-    if(message.user._id === decodedToken2._id){
-      return 'message-sent'
-    } else {
-      return 'message-received'
-    }
-  }
 
-  
+    if(message.user) {
+
+      if(message.user._id === decodedToken2._id){
+        return 'message-sent'
+      } else {
+        return 'message-received'
+      }
+
+    }
+  };
+
+  const messageSignature = () => {
+    if(message) {
+      if(message.user){
+        if(message.user.userName) {
+          return message.user.userName
+        } else return 'Deleted User'
+      }
+    }
+  };
+
   return (
     <div id='message-group' onMouseEnter={e => handleMouseEnter(e, message.user)} onMouseLeave={handleMouseLeave}>
 
@@ -82,14 +96,16 @@ function Message({ message, sessionToken, getAllMessages }) {
           </>
           :
           <div className='message-parents'>
-            <p id='message-body' className= 
-              {handleSenderAlign()}>{message.body}
+            <p id='message-body' 
+            className={handleSenderAlign()}
+            >{message.body}
             </p>
           </div>
           }
-
       <div className='message-parents'>
-        <p id='signature' className={handleSenderAlign()}>-{message.user ? message.user.userName : 'Deleted User'}</p>
+        <p id='signature' 
+        className={handleSenderAlign()}
+        >-{messageSignature()}</p>
       </div>
       { showOptions && !inEdit 
         ? <div id='message-menu'>

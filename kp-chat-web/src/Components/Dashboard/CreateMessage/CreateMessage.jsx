@@ -10,25 +10,22 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
     e.preventDefault();
 
     if(messageBody.trim() === '') return;
-    console.log(messageBody, ' message body');
 
     const user = decode.jwtDecode(sessionToken);
-
-    console.log(decode.jwtDecode(sessionToken), '===============================');
-
+    
+//! --------------------------------------
     const message = {
-      user: user._id,
+      user: user,
       room: selectedRoom._id,
       body: messageBody,
     };
 
     if(socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(messageBody));
-      //!changed this from message to messageBody
+      socket.send(JSON.stringify(message));
     } else {
       console.error('WebSocket is not open');
     }
-
+//! the issue lies here I think but I am too tired to think 
 
     const options = {
       method: "POST",
@@ -40,12 +37,6 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
     }
     fetch(`http://10.0.0.23:8081/message/${selectedRoom._id}`, options)
       .then(res => res.json())
-      .then((data) => {
-        if(data && data.newMessage) {
-          const newMessage = data.newMessage
-          messageCreated(newMessage)
-        }
-      })
       .catch((error) => {
         console.log(`error`, error)
       });
