@@ -22,7 +22,6 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
     fetch(`http://10.0.0.23:8081/message/${selectedRoom._id}`, options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, ' this is the data being set to roomMessages');
         if (Array.isArray(data.allMessages)) {
           setRoomMessages(data.allMessages)
         } else {
@@ -79,7 +78,6 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
             )
             : <h1>Loading</h1>
           }
-{console.log(roomMessages,' this is roomMessages')}
         </div>
       </div>
       {selectedRoom && (

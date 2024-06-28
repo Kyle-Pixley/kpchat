@@ -8,27 +8,27 @@ function Message({ message, sessionToken, getAllMessages }) {
   const [ inEdit, setInEdit ] = useState(false);
   const [ newEditMessage, setNewEditMessage ] = useState("");
 
-  const handleMouseEnter = (e, messageUser) => {
+  const handleMouseEnter = (messageUser) => {
     const decodedToken = decode.jwtDecode(sessionToken);
     if (decodedToken.isAdmin || (messageUser && decodedToken._id === messageUser._id)) {
       setShowOptions(true);
     }
   }
 
-  const handleMouseLeave = e => {
+  const handleMouseLeave = () => {
     setShowOptions(false);
   }
 
-  const enableEditMessage = e => {
+  const enableEditMessage = () => {
     setInEdit(true);
   }
 
-  const cancelEditMessage = e => {
+  const cancelEditMessage = () => {
     setInEdit(false);
     setNewEditMessage("");
   }
 
-  const submitEditMessage = e => {
+  const submitEditMessage = () => {
     const options = {
       method: "PUT",
       body: JSON.stringify({ body: newEditMessage }),
@@ -57,16 +57,30 @@ function Message({ message, sessionToken, getAllMessages }) {
       .then(() => getAllMessages());
   }
 
-  // const handleSenderAlign = () => {
-  //   const decodedToken2 = decode.jwtDecode(sessionToken);
-  //   if(message.user._id === decodedToken2._id){
-  //     return 'message-sent'
-  //   } else {
-  //     return 'message-received'
-  //   }
-  // }
+  const handleSenderAlign = () => {
+    const decodedToken2 = decode.jwtDecode(sessionToken);
 
-  
+    if(message.user) {
+
+      if(message.user._id === decodedToken2._id){
+        return 'message-sent'
+      } else {
+        return 'message-received'
+      }
+
+    }
+  };
+
+  const messageSignature = () => {
+    if(message) {
+      if(message.user){
+        if(message.user.userName) {
+          return message.user.userName
+        } else return 'Deleted User'
+      }
+    }
+  };
+
   return (
     <div id='message-group' onMouseEnter={e => handleMouseEnter(e, message.user)} onMouseLeave={handleMouseLeave}>
 
@@ -83,17 +97,15 @@ function Message({ message, sessionToken, getAllMessages }) {
           :
           <div className='message-parents'>
             <p id='message-body' 
-            // className={handleSenderAlign()}
+            className={handleSenderAlign()}
             >{message.body}
             </p>
           </div>
           }
-{console.log(message, ' this is it here buddy')}
-{/* message comes back as 2 different Objects when the page loads it is what I want and when the message is sent via the socket it is different because I tried to do the socket at a later time than the roomMessages so they are saving to the dataBase as one thing and sending over the socket as another ****see createMessage.jsx**** */}
       <div className='message-parents'>
         <p id='signature' 
-        // className={handleSenderAlign()}
-        >-{message.user ? message.user.userName : 'Deleted User'}</p>
+        className={handleSenderAlign()}
+        >-{messageSignature()}</p>
       </div>
       { showOptions && !inEdit 
         ? <div id='message-menu'>

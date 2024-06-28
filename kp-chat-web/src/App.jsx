@@ -3,6 +3,8 @@ import './App.css';
 import Auth from './Components/Auth';
 import Dashboard from './Components/Dashboard/Dashboard';
 
+//todo Is it disconnecting randomly???
+
 
 function App() {
 
@@ -19,39 +21,38 @@ function App() {
     if(sessionToken) {
       const ws = new WebSocket('ws://10.0.0.23:8081');
 
-      ws.onopen = () => {
-        console.log('WebSocket connection opened');
-        ws.send(JSON.stringify({ type: 'authenticate', token: sessionToken}));
-      };
+      // ws.onopen = () => {
+      //   console.log('WebSocket connection opened');
+      //   ws.send(JSON.stringify({ type: 'authenticate', token: sessionToken}));
+      // };
 
-      ws.onmessage = (e) => {
-        if (e.data instanceof Blob) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            try {
-              const message = JSON.parse(reader.result);
-              console.log('Received message:', message);
+      // ws.onmessage = (e) => {
+      //   if (e.data instanceof Blob) {
+      //     const reader = new FileReader();
+      //     reader.onload = () => {
+      //       try {
+      //         const message = JSON.parse(reader.result);
+      //         console.log('Received message:', message);
+      //       } catch (error) {
+      //         console.error('Failed to parse WebSocket message:', reader.result, error);
+      //       }
+      //     };
+      //     reader.onerror = (error) => {
+      //       console.error('Failed to read Blob:', error);
+      //     };
+      //     reader.readAsText(e.data);
+      //   } else {
+      //     console.error('Unexpected non-Blob data:', e.data);
+      //   }
+      // };
 
-            } catch (error) {
-              console.error('Failed to parse WebSocket message:', reader.result, error);
-            }
-          };
-          reader.onerror = (error) => {
-            console.error('Failed to read Blob:', error);
-          };
-          reader.readAsText(e.data);
-        } else {
-          console.error('Unexpected non-Blob data:', e.data);
-        }
-      };
+      // ws.onclose = () => {
+      //   console.log(' WebSocket connection closed');
+      // };
 
-      ws.onclose = () => {
-        console.log(' WebSocket connection closed');
-      };
-
-      ws.onerror = (err) => {
-        console.error('WebSocket error', err);
-      };
+      // ws.onerror = (err) => {
+      //   console.error('WebSocket error', err);
+      // };
 
       setSocket(ws);
 
