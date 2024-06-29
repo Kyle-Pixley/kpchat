@@ -12,8 +12,7 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
     if(messageBody.trim() === '') return;
 
     const user = decode.jwtDecode(sessionToken);
-    
-//! --------------------------------------
+  
     const message = {
       user: user,
       room: selectedRoom._id,
@@ -25,7 +24,7 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
     } else {
       console.error('WebSocket is not open');
     }
-//! the issue lies here I think but I am too tired to think 
+
 
     const options = {
       method: "POST",
