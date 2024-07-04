@@ -17,7 +17,6 @@ function Dashboard({ sessionToken, socket }) {
           reader.onload = () => {
             try {
               const newMessage = JSON.parse(reader.result);
-              console.log('newMessage: ',newMessage)
               setRoomMessages((prevMessages) => [...prevMessages, newMessage]);
             } catch (error) {
               console.error('Failed to parse WebSocket message:', reader.result, error);

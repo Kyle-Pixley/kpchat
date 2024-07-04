@@ -57,28 +57,30 @@ function Message({ message, sessionToken, getAllMessages }) {
   };
 
   const handleSenderAlign = () => {
-    const decodedToken2 = decode.jwtDecode(sessionToken);
 
-    if (message.user) {
+    const decodedToken2 = decode.jwtDecode(sessionToken);
+    
+    if (typeof message.user === 'object' && message.user !== null) {
       if (message.user._id === decodedToken2._id) {
         return 'message-sent';
       } else {
         return 'message-received';
       }
-    }
+    } else if (typeof message.user === 'string') {
+      if (message.usersId === decodedToken2._id) {
+        return 'message-sent';
+      } else {
+        return 'message-received';
+      }
+    } else return 'message-received';
   };
 
   const messageSignature = () => {
-    //! this will not include the message sent from the websocket
-    if (message && message.user) {
-      if (message.user.userName) {
-        return message.user.userName;
-      } else {
-        return 'Deleted User';
-      }
-    } else {
-      return 'Deleted User';
-    }
+    if(typeof message.user === 'string') {
+      return message.user
+    } else if(typeof message.user === 'object' && message.user !== null) {
+      return message.user.userName
+    } else return 'Deleted User'
   };
 
   return (
