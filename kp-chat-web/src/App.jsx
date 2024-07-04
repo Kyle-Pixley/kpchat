@@ -3,9 +3,6 @@ import './App.css';
 import Auth from './Components/Auth';
 import Dashboard from './Components/Dashboard/Dashboard';
 
-//todo Is it disconnecting randomly???
-
-
 function App() {
 
   const [ sessionToken, setSessionToken ] = useState(undefined);

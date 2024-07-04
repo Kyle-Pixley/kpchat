@@ -7,6 +7,7 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
 
   const [ allRooms, setAllRooms ] = useState([]);;
   const roomMessageRef = useRef(null);
+  
 
   function getAllMessages() {
     
@@ -90,13 +91,13 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
                   message={message}
                   sessionToken={sessionToken}
                   getAllMessages={getAllMessages}
+                  roomMessages={roomMessages}
                   />
             })}
           </div>
           <CreateMessage 
             sessionToken={sessionToken}
             selectedRoom={selectedRoom}
-            // messageCreated={handleMessageCreated}
             socket={socket}
           />
         </div>
