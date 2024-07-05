@@ -5,8 +5,24 @@ import Dashboard from './Components/Dashboard/Dashboard';
 
 function App() {
 
+  const [ isDesktop, setIsDesktop ] = useState(window.innerWidth >= 700);
   const [ sessionToken, setSessionToken ] = useState(undefined);
   const [ socket, setSocket ] = useState(null);
+
+  //looks to see if the user is on a device that is less than or more than 700px wide
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 700px)');
+
+    const handleMediaQueryChange = e => {
+      setIsDesktop(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+    }
+  }, [])
 
   useEffect(() => {
     if(localStorage.getItem("token")) {
@@ -17,39 +33,6 @@ function App() {
   useEffect(() => {
     if(sessionToken) {
       const ws = new WebSocket('ws://10.0.0.23:8081');
-
-      // ws.onopen = () => {
-      //   console.log('WebSocket connection opened');
-      //   ws.send(JSON.stringify({ type: 'authenticate', token: sessionToken}));
-      // };
-
-      // ws.onmessage = (e) => {
-      //   if (e.data instanceof Blob) {
-      //     const reader = new FileReader();
-      //     reader.onload = () => {
-      //       try {
-      //         const message = JSON.parse(reader.result);
-      //         console.log('Received message:', message);
-      //       } catch (error) {
-      //         console.error('Failed to parse WebSocket message:', reader.result, error);
-      //       }
-      //     };
-      //     reader.onerror = (error) => {
-      //       console.error('Failed to read Blob:', error);
-      //     };
-      //     reader.readAsText(e.data);
-      //   } else {
-      //     console.error('Unexpected non-Blob data:', e.data);
-      //   }
-      // };
-
-      // ws.onclose = () => {
-      //   console.log(' WebSocket connection closed');
-      // };
-
-      // ws.onerror = (err) => {
-      //   console.error('WebSocket error', err);
-      // };
 
       setSocket(ws);
 
@@ -68,8 +51,12 @@ function App() {
   //handles what you see based on if you have a valid token in your local storage
   const handleView = () => {
     return !sessionToken 
-      ? <Auth updateLocalStorage = {updateLocalStorage} /> 
-      : <Dashboard sessionToken={sessionToken} socket={socket} />
+      ? <Auth 
+          updateLocalStorage={updateLocalStorage} /> 
+      : <Dashboard 
+          sessionToken={sessionToken} 
+          socket={socket} 
+          isDesktop={isDesktop} />
   };
 
   //set to button when clicked sets token to undefined thus logging them out
