@@ -64,6 +64,17 @@ button:hover {
     animation: slide-grow-hyphen .5s cubic-bezier(.25, .5, .46, .95) both;
     animation-delay: 1.5s;
 }
+@media (max-width: 700px) {
+    .title {
+        font-size: 10vw;
+    }
+    button, .input {
+        width: 60vw;
+        height: 4vh;
+        font-size: 1em;
+        font-weight: 600;
+    }
+}
 @keyframes slide-grow-1 {
     0% {
         transform: translateX(-5000px);

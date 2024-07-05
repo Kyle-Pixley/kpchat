@@ -1,11 +1,9 @@
 #rooms-container {
-    padding: 1vw;
     display: flex;
+    flex-direction: column;
 }
 #rooms-list-parent {
     width: 20vw;
-    display: flex;
-    flex-direction: column;
 }
 #room-list {
     width: 100%;
@@ -44,4 +42,35 @@
     background-color: #b4f9e4;
     box-shadow: inset 2px 2px 4px white, 2px 2px 4px #0c926a;
     margin-left: 2vh;
+}
+@media (max-width: 700px) {
+    #rooms-container, #rooms-list-parent {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+    #room-list {
+        display: grid;
+        grid-template-columns: auto auto;
+        margin: 0;
+        width: 100%;
+    }
+    .room-name {
+        width: 40vw;
+        height: 11vw;
+        font-size: 1.8em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #create-room-button {
+        width: 60vw;
+        height: 11vw;
+        font-size: 1.8em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

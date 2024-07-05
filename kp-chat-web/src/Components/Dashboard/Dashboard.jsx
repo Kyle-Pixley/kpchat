@@ -3,11 +3,12 @@ import Rooms from './Rooms/Rooms.jsx';
 import CreateRoom from './CreateRoom/CreateRoom.jsx';
 import './Dashboard.css';
 
-function Dashboard({ sessionToken, socket }) {
+function Dashboard({ sessionToken, socket, isDesktop }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [roomMessages, setRoomMessages] = useState([]);
+  const [ roomListOpen, setRoomListOpen ] = useState(false);
 
   useEffect(() => {
     if (socket) {
@@ -48,20 +49,47 @@ function Dashboard({ sessionToken, socket }) {
         </>
       );
     } else {
+      return displayRoomList()
+      //   <Rooms
+      //     sessionToken={sessionToken}
+      //     isOpen={isOpen}
+      //     setIsOpen={setIsOpen}
+      //     socket={socket}
+      //     selectedRoom={selectedRoom}
+      //     setSelectedRoom={setSelectedRoom}
+      //     messages={messages}
+      //     setMessages={setMessages}
+      //     roomMessages={roomMessages}
+      //     setRoomMessages={setRoomMessages}
+      //   />
+      // );
+    }
+  };
+
+  const displayRoomList = () => {
+    if(isDesktop || (!isDesktop && roomListOpen)) {
       return (
-        <Rooms
-          sessionToken={sessionToken}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          socket={socket}
-          selectedRoom={selectedRoom}
-          setSelectedRoom={setSelectedRoom}
-          messages={messages}
-          setMessages={setMessages}
-          roomMessages={roomMessages}
-          setRoomMessages={setRoomMessages}
-        />
-      );
+      <Rooms
+        sessionToken={sessionToken}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        socket={socket}
+        selectedRoom={selectedRoom}
+        setSelectedRoom={setSelectedRoom}
+        messages={messages}
+        setMessages={setMessages}
+        roomMessages={roomMessages}
+        setRoomMessages={setRoomMessages}
+        roomListOpen={roomListOpen}
+        setRoomListOpen={setRoomListOpen}
+        isDesktop={isDesktop}
+    /> )
+    } else {
+      return (
+        <button 
+          id='room-list-button'
+          onClick={() => setRoomListOpen(!roomListOpen)} >Rooms</button>
+      )
     }
   };
 
