@@ -5,7 +5,6 @@ const adminValidation = require("../middlewares/admin");
 
 router.get("/:room_id", async (req, res) => {
     try {
-        console.log('aslkdjf;alskjfd')
         const { room_id } = req.params;
         const allMessages = await Message.find({ room: room_id }).populate("user", { userName: 1 });
         res.status(200).json({

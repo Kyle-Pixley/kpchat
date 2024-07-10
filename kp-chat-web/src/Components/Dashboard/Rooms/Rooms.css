@@ -44,12 +44,15 @@
     margin-left: 2vh;
 }
 @media (max-width: 700px) {
-    #rooms-container, #rooms-list-parent {
+    #rooms-list-parent, #rooms-container {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         margin: auto;
+    }
+    #room-list-button {
+        align-self: flex-start;
     }
     #room-list {
         display: grid;
@@ -73,4 +76,5 @@
         justify-content: center;
         align-items: center;
     }
+    
 }
