@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Rooms from './Rooms/Rooms.jsx';
 import CreateRoom from './CreateRoom/CreateRoom.jsx';
 import Message from '../Dashboard/Message/Message.jsx';
+import CreateMessage from '../Dashboard/CreateMessage/CreateMessage.jsx';
 import './Dashboard.css';
 
 function Dashboard({ sessionToken, socket, isDesktop }) {
@@ -10,6 +11,13 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [roomMessages, setRoomMessages] = useState([]);
   const [ roomListOpen, setRoomListOpen ] = useState(false);
+  const roomMessageRef = useRef(null);
+
+  useEffect(() => {
+    if (roomMessageRef.current) {
+      roomMessageRef.current.scrollTo(0, roomMessageRef.current.scrollHeight)
+    }
+  }, [roomMessages])
 
   useEffect(() => {
     if (socket) {
@@ -113,16 +121,8 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
             setRoomListOpen={setRoomListOpen}
             isDesktop={isDesktop}
             /> 
-          { roomMessages.map((message, i) => {
-          return <Message
-          key={i}
-          message={message}
-          sessionToken={sessionToken}
-          getAllMessages={getAllMessages}
-          roomMessages={roomMessages}
-          />
-        })}
-        {/* //todo data is being collected but not displayed. I Knew I was gonna "F" it up LOL */}
+
+          
         </>
         )
     } else {
@@ -139,6 +139,27 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
       <div>
         {displayCreateForm()}
       </div>
+      {selectedRoom && (
+        <div id='selected-room-parent'>
+        <h2 id='selected-room-title'>{selectedRoom.name}</h2>
+        <div id='room-messages' ref={roomMessageRef}>
+        { roomMessages.map((message, i) => {
+          return <Message
+            key={i}
+            message={message}
+            sessionToken={sessionToken}
+            getAllMessages={getAllMessages}
+            roomMessages={roomMessages}
+          />
+        })}
+        </div>
+        <CreateMessage 
+        sessionToken={sessionToken}
+        selectedRoom={selectedRoom}
+        socket={socket}
+        />
+        </div>
+      )}
     </div>
   );
 }
