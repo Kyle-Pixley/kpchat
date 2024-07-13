@@ -59,19 +59,6 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
       );
     } else {
       return displayRoomList()
-      //   <Rooms
-      //     sessionToken={sessionToken}
-      //     isOpen={isOpen}
-      //     setIsOpen={setIsOpen}
-      //     socket={socket}
-      //     selectedRoom={selectedRoom}
-      //     setSelectedRoom={setSelectedRoom}
-      //     messages={messages}
-      //     setMessages={setMessages}
-      //     roomMessages={roomMessages}
-      //     setRoomMessages={setRoomMessages}
-      //   />
-      // );
     }
   };
 

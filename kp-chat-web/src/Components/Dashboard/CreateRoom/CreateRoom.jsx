@@ -38,6 +38,7 @@ function CreateRoom({ sessionToken }) {
           name='name'
           value={name}
           onChange={e => setName(e.target.value)}
+          maxLength='12'
           placeholder='Name'
         />
         <label id='description-label'>Description</label>
