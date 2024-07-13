@@ -25,21 +25,12 @@ app.use("/rooms", sessionValidation, roomController);
 app.use("/message", sessionValidation, messageController);
 
 wss.on('connection', (ws) => {
-    console.log('WebSocket client connected');
-
     ws.on('message', (message) => {
-        console.log('Received message:', message);
-
         wss.clients.forEach((client) => {
             if(client.readyState === WebSocket.OPEN) {
                 client.send(message);
-                console.log('Sent to client: ', JSON.stringify(message));
             }
         })
-    });
-
-    ws.on('close', () => {
-        console.log('WebSocket client disconnected');
     });
 
     ws.on('error', (error) => {

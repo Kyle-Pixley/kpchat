@@ -5,6 +5,7 @@
 #rooms-list-parent {
     width: 20vw;
     width: 100%;
+    
 }
 .room-name {
     background-color: #35bcbf;
@@ -36,7 +37,7 @@
         width: 100%;
         height: 18vh;
         border: 1px solid black;
-        overflow-x: scroll;
+        overflow-y: scroll;
     }
     #room-list-button {
         align-self: flex-start;
