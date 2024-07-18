@@ -52,10 +52,10 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
   const displayCreateForm = () => {
     if (isOpen) {
       return (
-        <>
+        <div>
           <button onClick={() => setIsOpen(false)}>Close</button>
           <CreateRoom sessionToken={sessionToken} />
-        </>
+        </div>
       );
     } else {
       return displayRoomList()
@@ -92,7 +92,6 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
     if(isDesktop || (!isDesktop && roomListOpen)) {
       return (
         <>
-
           <Rooms
             sessionToken={sessionToken}
             isOpen={isOpen}
@@ -108,8 +107,6 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
             setRoomListOpen={setRoomListOpen}
             isDesktop={isDesktop}
             /> 
-
-          
         </>
         )
     } else {
@@ -123,7 +120,7 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
 
   return (
     <div id='dashboard'>
-      <div>
+      <div id='rooms-component-parent'>
         {displayCreateForm()}
       </div>
       {selectedRoom && (
