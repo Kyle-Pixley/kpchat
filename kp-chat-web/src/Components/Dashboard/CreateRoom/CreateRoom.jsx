@@ -29,11 +29,13 @@ function CreateRoom({ sessionToken }) {
   }
 
   return (
-    <div>
+    <div id='create-room-component'>
       <form id='create-room' action="" method="POST">
-        <h2 id='form-title'>Create Room</h2>
-        <label id='name-label'>Name</label>
+        <h2 id='form-title'>Create a Room</h2>
+        <label id='name-label' className='input-labels'>Name</label>
         <input
+          required 
+          className='create-room-inputs'
           type='text'
           name='name'
           value={name}
@@ -41,8 +43,11 @@ function CreateRoom({ sessionToken }) {
           maxLength='12'
           placeholder='Name'
         />
-        <label id='description-label'>Description</label>
-        <input
+        <label id='description-label' className='input-labels'>Description</label>
+        <textarea
+          rows='4'
+          id='create-room-description-input'
+          className='create-room-inputs'
           type='text'
           name='description'
           value={description}

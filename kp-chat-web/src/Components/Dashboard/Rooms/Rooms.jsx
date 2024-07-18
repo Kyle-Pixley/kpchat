@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Rooms.css';
 
-function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelectedRoom, roomMessages, setRoomMessages, isDesktop, roomListOpen, setRoomListOpen }) {
+function Rooms({ sessionToken, isOpen, setIsOpen, setSelectedRoom, isDesktop, roomListOpen, setRoomListOpen }) {
 
   const [ allRooms, setAllRooms ] = useState([]);;
 
@@ -24,6 +24,7 @@ function Rooms({ sessionToken, isOpen, setIsOpen, socket, selectedRoom, setSelec
     setSelectedRoom(room)
   }
 
+// button to toggle list of rooms only available when screen width is less than 700 pixels 
   const displayRoomListButton = () => {
     if(!isDesktop && roomListOpen) {
       return ( <button id='room-list-button' onClick={() => setRoomListOpen(!roomListOpen)}>Rooms</button> )
