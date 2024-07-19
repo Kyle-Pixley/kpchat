@@ -4,11 +4,6 @@
     height: 100%;
     padding: 1vw;
 }
-#rooms-component-parent {
-    width: 23vw;
-    display: flex;
-    justify-content: center;    
-}
 #selected-room-parent {
     width: 70vw;
     display: flex;
@@ -32,6 +27,7 @@
 @media (max-width: 700px) {
     #dashboard {
         display: block;
+        padding: 0;
     }
     #selected-room-parent {
         width: 100%;
@@ -39,9 +35,14 @@
     #room-messages {
         width: 90%;
     }
+    #rooms-component-parent {
+        width: fit-content;
+        padding-top: 0;
+    }
     #room-list-button {
         width: 20vw;
         height: 13vw;
         border: 1px solid black;
+        align-self: flex-start;
     }
 }
