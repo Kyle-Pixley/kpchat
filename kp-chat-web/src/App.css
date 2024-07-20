@@ -5,6 +5,7 @@
   overflow: hidden;
 }
 #logout {
+  /* !Change this position so its not sticky */
   position: absolute;
   right: .5vh;
   top: .5vh;
