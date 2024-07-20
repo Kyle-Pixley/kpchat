@@ -53,7 +53,7 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
     if (isOpen) {
       return (
         <div>
-          <button onClick={() => setIsOpen(false)}>Rooms</button>
+          <button id='rooms-toggle-button' onClick={() => setIsOpen(false)}>Rooms</button>
           <CreateRoom sessionToken={sessionToken} />
         </div>
         //! Make button different 'color?' when isOpen is open

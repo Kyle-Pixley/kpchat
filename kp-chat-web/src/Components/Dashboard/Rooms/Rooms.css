@@ -43,25 +43,24 @@
         gap: .8em;
         grid-template-columns: auto auto auto;
         margin: 0;
-        width: 100%;
         height: 18vh;
         overflow-x: scroll;
-        width: 100%;
+        width: 94%;
+        border: 1px solid black;
     }
     .room-name {
-        width: 28vw;
-        height: 11vw;
-        font-size: 1.8em;
+        width: 27vw;
+        height: 12vw;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 1.3em;
+        font-size: 1.25em;
         padding: .1em;
     }
     #create-room-button {
-        width: 60vw;
+        width: 70vw;
         height: 11vw;
-        font-size: 1.8em;
+        font-size: 1.6em;
         display: flex;
         justify-content: center;
         align-items: center;

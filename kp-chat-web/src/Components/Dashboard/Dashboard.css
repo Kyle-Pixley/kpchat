@@ -29,6 +29,11 @@
         display: block;
         padding: 0;
     }
+    #rooms-toggle-button {
+        width: 20vw;
+        height: 13vw;
+        border: 1px solid black;
+    }
     #selected-room-parent {
         width: 100%;
     }

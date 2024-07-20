@@ -35,6 +35,7 @@ function CreateRoom({ sessionToken }) {
         <label id='name-label' className='input-labels'>Name</label>
         <input
           required 
+          id='create-room-name-input'
           className='create-room-inputs'
           type='text'
           name='name'
