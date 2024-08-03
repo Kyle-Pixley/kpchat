@@ -53,10 +53,9 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
     if (isOpen) {
       return (
         <div>
-          <button id='rooms-toggle-button' onClick={() => setIsOpen(false)}>Rooms</button>
+          <button style={{backgroundColor:'#1f6f70'}}id='rooms-toggle-button' onClick={() => setIsOpen(false)}>Back</button>
           <CreateRoom sessionToken={sessionToken} />
         </div>
-        //! Make button different 'color?' when isOpen is open
       );
     } else {
       return displayRoomList()
@@ -112,7 +111,7 @@ function Dashboard({ sessionToken, socket, isDesktop }) {
       return (
         <button 
           id='room-list-button'
-          onClick={() => setRoomListOpen(!roomListOpen)} >Rooms</button>
+          onClick={() => setRoomListOpen(!roomListOpen)}>Rooms</button>
       )
     }
   };

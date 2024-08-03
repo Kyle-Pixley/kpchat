@@ -2,6 +2,7 @@
     border: 1px solid black;
     background-color: #b4f9e4;
     box-shadow: inset 2px 2px 4px white, 2px 2px 4px #0c926a;
+    width: 22.5vw;
 }
 #create-room {
     display: flex;
@@ -20,9 +21,10 @@
 .create-room-inputs {
     height: 3vw;
     font-size: 1.8vw;
+    width: 80%;
 }
 #create-room-description-input {
-    height: 12vw;
+    height: 11vw;
 }
 #submit-button {
     margin: 4vh 0;

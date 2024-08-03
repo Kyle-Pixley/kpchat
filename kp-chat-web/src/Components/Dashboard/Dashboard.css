@@ -23,6 +23,7 @@
     height: 68vh;
     background-color: #b4f9e4;
     box-shadow: inset 2px 2px 4px white, 2px 2px 4px #0c926a;
+    overflow-x: hidden;
 }
 @media (max-width: 700px) {
     #dashboard {
@@ -39,6 +40,7 @@
     }
     #room-messages {
         width: 90%;
+        padding: .5em;
     }
     #rooms-component-parent {
         width: fit-content;
