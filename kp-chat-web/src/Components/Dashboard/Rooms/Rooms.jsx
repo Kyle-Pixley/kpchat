@@ -27,7 +27,7 @@ function Rooms({ sessionToken, isOpen, setIsOpen, setSelectedRoom, isDesktop, ro
 // button to toggle list of rooms only available when screen width is less than 700 pixels 
   const displayRoomListButton = () => {
     if(!isDesktop && roomListOpen) {
-      return ( <button id='room-list-button' onClick={() => setRoomListOpen(!roomListOpen)}>Rooms</button> )
+      return ( <button style={{backgroundColor: '#278e90'}}id='room-list-button' onClick={() => setRoomListOpen(!roomListOpen)}>Rooms</button> )
     } else null
   };
 

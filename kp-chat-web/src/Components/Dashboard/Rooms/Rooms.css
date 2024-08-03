@@ -44,9 +44,12 @@
         grid-template-columns: auto auto auto;
         margin: 0;
         height: 18vh;
-        overflow-x: scroll;
+        overflow-y: scroll;
         width: 94%;
         border: 1px solid black;
+        background-color: #b4f9e4;
+        box-shadow: inset 2px 2px 4px white, 2px 2px 4px #0c926a;
+        background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.15));
     }
     .room-name {
         width: 27vw;

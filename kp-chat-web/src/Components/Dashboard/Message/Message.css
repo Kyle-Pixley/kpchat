@@ -18,6 +18,8 @@
     padding: .3em .5em;
     border-radius: 15px;
     box-shadow: inset 2px 2px 4px white, 2px 2px 4px #042f22;
+    max-width: 95%;
+    height: fit-content;
 }
 #signature {
     font-size: 20px;

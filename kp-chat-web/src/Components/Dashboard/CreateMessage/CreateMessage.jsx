@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as decode from 'jwt-decode';
 import './CreateMessage.css';
 
 function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
 
   const [messageBody, setMessageBody] = useState('');
+  const messageInputRef = useRef(null);
+
+  useEffect(() => {
+    if (messageInputRef.current) {
+      messageInputRef.current.style.height = 'auto';
+      messageInputRef.current.style.height = `${messageInputRef.current.scrollHeight}px`;
+    }
+  }, [messageBody]);
 
   const submitMessage = e => {
     e.preventDefault();
@@ -62,15 +70,28 @@ function CreateMessage({ sessionToken, selectedRoom, messageCreated, socket }) {
       });
   };
 
+  const handleKeyDown = e => {
+    if(e.key === 'Enter') {
+      e.preventDefault();
+      if(messageBody.trim() !== '') {
+        submitMessage(e);
+      }
+    }
+  }
+
   return (
     <div style={{ width: '90%' }}>
       <form action='' id='new-message-form'>
-        <input
+        <textarea
+          rows={1}
+          ref={messageInputRef}
           id='message-input'
           type='text'
           value={messageBody}
           onChange={e => setMessageBody(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
+        {/* todo make this ^^ grow when input is too long to fit */}
         <span id='before'></span>
         <button id='submit-message' onClick={submitMessage}>Send</button>
       </form>
