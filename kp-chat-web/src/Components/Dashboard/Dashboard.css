@@ -1,0 +1,55 @@
+#dashboard {
+    overflow-y: scroll;
+    display: flex;
+    height: 100%;
+    padding: 1vw;
+}
+#selected-room-parent {
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#selected-room-title {
+    font-size: 33px;
+    margin-bottom: 1.5vh;
+}
+#room-messages {
+    border: 1px solid black;
+    width: 100%;
+    font-size: 22px;
+    overflow-y: scroll;
+    height: 68vh;
+    background-color: #b4f9e4;
+    box-shadow: inset 2px 2px 4px white, 2px 2px 4px #0c926a;
+    overflow-x: hidden;
+}
+@media (max-width: 700px) {
+    #dashboard {
+        display: block;
+        padding: 0;
+    }
+    #rooms-toggle-button {
+        width: 20vw;
+        height: 13vw;
+        border: 1px solid black;
+    }
+    #selected-room-parent {
+        width: 100%;
+    }
+    #room-messages {
+        width: 90%;
+        padding: .5em;
+    }
+    #rooms-component-parent {
+        width: fit-content;
+        padding-top: 0;
+    }
+    #room-list-button {
+        width: 20vw;
+        height: 13vw;
+        border: 1px solid black;
+        align-self: flex-start;
+    }
+}

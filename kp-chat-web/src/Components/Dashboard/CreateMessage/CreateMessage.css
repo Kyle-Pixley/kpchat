@@ -1,0 +1,17 @@
+#new-message-form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+#message-input {
+    width: 60%;
+    font-size: 180%;
+    overflow: hidden;
+    resize: none;
+}
+#submit-message {
+    width: 30%;
+    margin-right: 2vw;
+}

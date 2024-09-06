@@ -1,11 +1,10 @@
 const router = require("express").Router();
-const Room = require("../models/room");
+const Room = require("../models/rooms");
 const adminValidation = require("../middlewares/admin");
 
 
 // creates new room under the currently logged in user
 router.post("/", async (req, res) => {
-    console.log('Create room route hit')
     try {
         const { name, description } = req.body;
         const _id = req.user._id;
