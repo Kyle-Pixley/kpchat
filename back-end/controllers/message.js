@@ -48,12 +48,8 @@ router.put("/:message_id", async (req, res) => {
         const { message_id } = req.params;
         const { body } = req.body;
 
-        console.log(body);
-
         const findMessage = await Message.findOne({ _id: message_id });
         if (!findMessage) throw Error("No message was found");
-
-        console.log(`Message Created By: ${findMessage.user._id}`, `User Request To Delete: ${req.user._id}`);
 
         if (!req.user.isAdmin && !findMessage.user._id.equals(req.user._id)) throw Error("User does not have permission");
 
@@ -81,8 +77,6 @@ router.delete("/:message_id", async (req, res) => {
         const findMessage = await Message.findOne({ _id: message_id });
 
         if (!findMessage) throw Error("No message was found");
-
-        console.log(`Message Created By: ${findMessage.user._id}`, `User Request To Delete: ${req.user._id}`);
 
         if (!req.user.isAdmin && !findMessage.user._id.equals(req.user._id)) throw Error("User does not have permission");
 

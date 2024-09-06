@@ -9,7 +9,6 @@ const sessionValidation = require("../middlewares/session");
 
 
 router.post('/login', async (req, res) => {
-    console.log('login route hit')
     try {
         const { userName, password } = req.body
 
@@ -46,7 +45,6 @@ router.post('/login', async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-    console.log('route hit')
     try {
         const { userName, firstName, lastName, email, password } = req.body;
 
@@ -120,10 +118,8 @@ router.delete("/delete/:id", sessionValidation, async (req, res) => {
 });
 
 router.get(`/getUsersUserName/:userId`, sessionValidation, async (req, res) => {
-    console.log('get username by user id route hit')
     try {
         const { userId } = req.params;
-        console.log('User ID: ', userId);
 
         const user = await User.findById(userId)
 
@@ -145,17 +141,14 @@ router.get(`/getUsersUserName/:userId`, sessionValidation, async (req, res) => {
 
 
 router.get("/getUsersRooms/:userId", sessionValidation, async (req, res) => {
-    console.log('** get all rooms the user belongs to')
     try {
         const { userId } = req.params;
-        console.log('User ID: ', userId);
 
         const user = await User.findById(userId).populate('rooms');
 
         if (!user) {
             return res.status(404).json({ message: `User is not found`});
         }
-        console.log("User rooms: ", user.rooms)
 
         res.status(200).json({
             message: `All user's rooms retrieved`,
